@@ -45,7 +45,7 @@ export const Hero = () => {
                      <Image src={'/img/main-hero.png'} height={350} width={350} alt={'awwalzgambo'} className="lg:hidden" />
                 </div> */}
 
-                <div className="hidden lg:flex absolute left-[-2.5rem] pt-10 bottom-0 w-full max-h-[98%]">
+                <div className="hidden lg:flex absolute left-[-2.5rem] pt-10 bottom-0 w-full max-h-[99vh]">
                     <Image src={'/img/main-hero.png'} height={500} width={500} alt={'awwalzgambo'} className="hidden lg:block" />
                 </div>
             </div>

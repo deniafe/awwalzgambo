@@ -40,7 +40,7 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed z-10 top-0 flex justify-center h-[70px] w-full transition-colors duration-300 ${scrolled ? 'bg-gray-100' : 'bg-transparent'}`}>
+    <nav className={`fixed z-20 top-0 flex justify-center h-[70px] w-full transition-colors duration-300 ${scrolled ? 'bg-gray-100' : 'bg-transparent'}`}>
       <div className="w-full px-[1rem] md:px-0 md:w-5/6 flex justify-between">
         <div className="flex items-center">
           <Image src={'/img/favicon2.jpeg'} height={40} width={40} alt={'awwalzgambo'} />

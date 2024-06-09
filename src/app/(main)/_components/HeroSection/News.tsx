@@ -37,12 +37,21 @@ export function NewsSection() {
         <CarouselContent className="flex">
           {newsItems.map((item) => (
             <CarouselItem key={item.id} className="relative">
-              <Card className="relative m-2 transition-transform transform hover:scale-105">
-                <CardContent className="relative grid grid-cols-1 md:grid-cols-2  space-x-4 p-0">
-                  <div className="flex items-center col-span-1 justify-center">
+              <Card className="relative m-2 transition-transform transform hover:scale-105 min-h-96">
+                <CardContent className="relative grid grid-cols-1 md:grid-cols-2 space-x-4 p-0">
+                  <div className="flex items-center col-span-1 justify-center text-center px-2 md:px-4">
                     {item.title}
                   </div>
-                  <Image src={item.imageUrl} alt={item.title} height={600} width={500} className="object-cover col-span-1" />
+                  <div className="col-span-1 w-full h-full bg-slate-400">
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.title}
+                      width={500}
+                      height={500}
+                      objectFit="cover"
+                      className="object-cover w-full h-96"
+                    />
+                  </div>
                 </CardContent>
               </Card>
             </CarouselItem>
