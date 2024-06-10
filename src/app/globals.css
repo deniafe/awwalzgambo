@@ -36,7 +36,7 @@
     } */
 
     :root {
-      --gradient: #554023;
+      --gradient: hsl(0, 0%, 0%);
       --background: 37 97.1% 98.48%;
       --foreground: 37 4.2% 0.96%;
   
@@ -52,7 +52,7 @@
       --border: 37 9.2% 89.96%;
       --input: 37 9.2% 89.96%;
   
-      --primary: 37 42% 24%;
+      --primary: 0 0% 0%;
       --primary-foreground: 37 0.84% 92.4%;
   
       --secondary: 37 2.1% 96.2%;

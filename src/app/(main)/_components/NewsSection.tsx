@@ -26,24 +26,24 @@ export function NewsSection() {
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto mb-[4rem]">
-      <h2 className="text-2xl font-bold mb-4">Latest News</h2>
+    <div className="relative z-2 bg-gray-100 w-full mb-[4rem] flex flex-col items-center md:min-h-screen">
+       <h2 className="text-3xl md:text-5xl text-gray-300 font-bold mb-12 mt-24">LATEST NEWS</h2>
       <Carousel
         plugins={[plugin.current]}
-        className="relative overflow-hidden w-full h-[32rem]"
+        className="relative overflow-hidden w-full md:max-w-4xl h-[32rem]"
         onMouseEnter={plugin.current.stop}
         onMouseLeave={plugin.current.reset}
       >
         <CarouselContent className="flex">
           {newsItems.map((item) => (
             <CarouselItem key={item.id} className="relative">
-              <Card className="relative m-2 transition-transform transform hover:scale-105 min-h-96">
-                <CardContent className="relative grid grid-cols-1 md:grid-cols-2 space-x-4 p-0">
-                  <div className="flex items-center col-span-1 justify-center text-center px-2 md:px-4">
+              <Card className="relative transition-transform transform hover:scale-105 min-h-96">
+                <CardContent className="relative grid grid-cols-1 md:grid-cols-2 md:space-x-4 p-0">
+                  <div className="flex items-center col-span-1 justify-center text-center px-2 py-8 md:px-4">
                     {item.title}
                   </div>
-                  <div className="col-span-1 w-full h-full bg-slate-400">
-                    <Image
+                  <div className="col-span-1 w-full flex justify-center h-full bg-slate-400">
+                    <Image 
                       src={item.imageUrl}
                       alt={item.title}
                       width={500}
