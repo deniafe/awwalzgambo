@@ -33,19 +33,19 @@ export const Navbar = () => {
   }, []);
 
   const navItems = [
-    { href: '#', label: 'Home', hideOnMobile: true },
-    { href: '#', label: 'About', hideOnMobile: false },
-    { href: '#', label: 'Speeches', hideOnMobile: false },
-    { href: '#', label: 'News', hideOnMobile: false },
-    { href: '#', label: 'Media', hideOnMobile: false },
+    { href: '/', label: 'Home', hideOnMobile: true },
+    { href: '/about', label: 'About', hideOnMobile: false },
+    { href: '/speeches', label: 'Speeches', hideOnMobile: false },
+    { href: '/news', label: 'News', hideOnMobile: false },
+    { href: '/media', label: 'Media', hideOnMobile: false },
   ];
 
   return (
     <nav className={`fixed z-20 top-0 flex justify-center h-[70px] w-full transition-colors duration-300 ${scrolled ? 'bg-gray-100' : 'bg-transparent'}`}>
       <div className="w-full px-[1rem] md:px-0 md:w-5/6 flex justify-between">
-        <div className="flex items-center">
+        <Link href={'/'} className="flex items-center">
           <Image src={'/img/favicon.png'} height={40} width={40} alt={'awwalzgambo'} />
-        </div>
+        </Link>
 
         <div className="flex items-center text-xs sm:text-sm space-x-2 md:space-x-4">
           {navItems.map((item) => (

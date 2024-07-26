@@ -15,7 +15,7 @@ export const Speech = () => {
             <h2 className="text-3xl md:text-5xl text-center text-gray-300 font-bold mb-12">SPEECH</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 md:space-x-8 space-y-8">
             <div className="p-4 border-t border-r border-solid border-black ">
-                <Image src='/img/speech.Jpeg' height={500} width={500} alt={'awwalzgambo'} className="cols-span-1 w-full h-full" />
+                <Image src='/img/speech.jpeg' height={500} width={500} alt={'awwalzgambo'} className="cols-span-1 w-full h-full" />
             </div>
             <div className="col-span-1 px-4 md:px-0">
               <p className="mb-4 text-center">Vice Admiral Awwal Zubairu Gambo was born on 22 April 1966 in Nasarawa Local Government Area of Kano State. Vice Admiral Gambo attended Gwagwarwa Special Primary School, Kano where he obtained his First Primary School Leaving Certificate. Thereafter, he proceeded to Rumfa College, Kano where he got his West African School Certificate in 1984.</p>

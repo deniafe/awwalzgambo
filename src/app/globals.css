@@ -118,3 +118,44 @@
       @apply bg-background text-foreground;
     }
   }
+
+  ::-webkit-scrollbar {
+    width: 2px;
+  }
+  
+  /* TRACK */
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.23);
+  }
+  
+  /* HANDLE */
+  ::-webkit-scrollbar-thumb {
+    background: #EECDA3;
+    /* height: 80px; */
+  }
+  
+  /* Both Vertical and Horizontal Scrollbars */
+  ::-webkit-scrollbar {
+    width: 2px; /* Width of the scrollbar */
+    height: 2px; /* Height of the scrollbar for the horizontal scrollbar */
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.23); /* Track color */
+  }
+  
+  /* Handle for Vertical Scrollbar */
+  ::-webkit-scrollbar-thumb {
+    background: #EECDA3; /* Thumb color for vertical scrollbar */
+  }
+  
+  /* Handle for Horizontal Scrollbar */
+  ::-webkit-scrollbar-thumb:horizontal {
+    background: #EECDA3; /* Thumb color for horizontal scrollbar */
+  }
+  
+  /* Corners */
+  ::-webkit-scrollbar-corner {
+    background: transparent; /* Color of the scrollbar corners */
+  }

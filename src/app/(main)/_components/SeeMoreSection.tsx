@@ -13,22 +13,22 @@ const cardData = [
     href: "/speeches",
   },
   {
-    title: "PHOTOS",
+    title: "ABOUT",
     icon: Users,
     description: "He enlisted into the Nigerian Defence Academy as a member of 36 Regular Course.",
-    href: "/photos",
+    href: "/about",
   },
   {
-    title: "PRESS RELEASES",
+    title: "NEWS",
     icon: Newspaper,
     description: "He enlisted into the Nigerian Defence Academy as a member of 36 Regular Course.",
-    href: "/press-releases",
+    href: "/news",
   },
   {
-    title: "VIDEOS",
+    title: "MEDIA",
     icon: Video,
     description: "He enlisted into the Nigerian Defence Academy as a member of 36 Regular Course.",
-    href: "/videos",
+    href: "/media",
   },
 ];
 

@@ -2,7 +2,7 @@
 'use client'
 
 import { Hero } from './Hero';
-import { Navbar } from './Navbar';
+import { Navbar } from '../../../../components/Navbar';
 import { Sidebar } from './Sidebar';
 
 export const HeroSection = () => {
