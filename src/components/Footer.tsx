@@ -21,8 +21,8 @@ export const Footer = () => {
 
   return (
     <footer>
-      <div className='flex justify-center' >
-        <Image src='/img/logo.png' height={500} width={500} alt={'awwalzgambo'} className="cols-span-1 w-300 h-300" />
+      <div className='flex justify-center py-16' >
+        <Image src='/img/logo.png' height={300} width={300} alt={'awwalzgambo'} className="cols-span-1 w-300 h-300" />
       </div>
       <div className="bg-black text-center text-white h-[100px]">
         <div className="container p-4 pb-0">

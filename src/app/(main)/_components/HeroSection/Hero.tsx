@@ -23,10 +23,10 @@ export const Hero = () => {
                 </h1> */}
 
                 <div className="lg:hidden text-[0.5rem] md:text-sm vertical-text">
-                    <h3 className="text-black">OFFICE OF THE FORMER
-                    <span className="text-orange-300 font-medium"> CHIEF OF NAVAL STAFF</span>
+                    <h3 className="text-black">21ST INDIGENOUS
+                    <span className="text-orange-300 font-medium">CHIEF OF THE NAVAL STAFF,</span>
                     </h3>
-                    <h3 className="">OF THE FEDERAL REPUBLIC OF NIGERIA
+                    <h3 className="">NIGERIAN NAVY
                     <span className="text-[0.25rem] md:text-xs"> 2021 - 2023</span>
                     </h3>
                 </div>
@@ -64,9 +64,9 @@ export const Hero = () => {
                 />
                 </div>
                 <div className="hidden lg:block absolute bottom-10 left-5">
-                    <h3 className="text-black text-l">OFFICE OF THE FORMER</h3>
-                    <h3 className="text-orange-400 text-l font-medium">CHIEF OF NAVAL STAFF</h3>
-                    <h3 className="text-l">OF THE FEDERAL REPUBLIC OF NIGERIA</h3>
+                    <h3 className="text-black text-l">21ST INDIGENOUS</h3>
+                    <h3 className="text-orange-400 text-l font-medium">CHIEF OF THE NAVAL STAFF,</h3>
+                    <h3 className="text-l">NIGERIAN NAVY</h3>
                     <p className="">2021 - 2023</p>
                 </div>
             </div>
