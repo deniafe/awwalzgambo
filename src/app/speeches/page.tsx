@@ -4,7 +4,7 @@ import { sanityFetch } from "@/sanity/client";
 
 const SPEECHES_QUERY = `*[
   _type == "year"
-  && category->title == "speech"
+  && category->title == "speeches"
 ]{_id, title, image{asset->{url}}}`;
 
 export default async function IndexPage() {

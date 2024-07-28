@@ -4,7 +4,7 @@ import { sanityFetch } from "@/sanity/client";
 
 const SPEECHES_MONTH_QUERY = `*[
   _type == "month"
-  && category->title == "speech"
+  && category->title == "speeches"
   && year->title == $year
 ]{_id, title, image{asset->{url}}}`;
 

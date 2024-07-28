@@ -4,7 +4,7 @@ import { sanityFetch } from "@/sanity/client";
 
 const SPEECHES_POST_QUERY = `*[
   _type == "post"
-  && category->title == "speech"
+  && category->title == "speeches"
   && year->title == $year
   && month->title == $month
 ]{_id, title, publishedAt}`;

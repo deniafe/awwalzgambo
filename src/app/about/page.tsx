@@ -3,9 +3,9 @@ import Image from "next/image";
 export default async function IndexPage() {
 
   return (
-    <main className="flex bg-gray-100 min-h-screen flex-col py-32 px-6 md:p-24 md:mt-20 gap-12">
-      <h1 className="text-4xl font-bold tracking-tighter">About</h1>
-      <div className="container mx-auto py-12 px-4 md:px-8 lg:px-16">
+    <main className="flex bg-gray-100 min-h-screen flex-col py-24 px-6 md:p-24 md:mt-20 gap-12">
+      {/* <h1 className="text-4xl font-bold tracking-tighter">About</h1> */}
+      <div className="container mx-auto px-4 md:px-8 lg:px-16">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4">Vice Admiral Awwal Zubairu Gambo</h1>
         <p className="text-xl">21st CHIEF OF THE NAVAL STAFF, Federal Republic of Nigeria</p>

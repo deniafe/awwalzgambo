@@ -59,7 +59,9 @@ export const Navbar = () => {
           ))}
         </div>
         <div className="flex justify-center items-center text-black">
+        <Link href={'/search'} className="flex items-center">
           <Search />
+        </Link>
         </div>
       </div>
     </nav>
