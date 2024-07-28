@@ -8,15 +8,22 @@ const SPEECHES_MONTH_QUERY = `*[
   && year->title == $year
 ]{_id, title, image{asset->{url}}}`;
 
+const MONTH_ORDER = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 export default async function IndexPage({
   params,
 }: {
   params: { slug: string };
-})  {
+}) {
   const { slug } = params;
 
+  let speeches_months: SanityDocument[] = [];
+
   try {
-    const speeches_months = await sanityFetch<SanityDocument[]>({
+    speeches_months = await sanityFetch<SanityDocument[]>({
       query: SPEECHES_MONTH_QUERY,
       params: { year: slug },
     });
@@ -25,9 +32,11 @@ export default async function IndexPage({
     console.log('This is an error', error);
   }
 
-  const speeches_months = await sanityFetch<SanityDocument[]>({
-    query: SPEECHES_MONTH_QUERY,
-    params: { year: slug },
+  // Sort speeches_months by month order
+  speeches_months.sort((a, b) => {
+    const monthA = a.title;
+    const monthB = b.title;
+    return MONTH_ORDER.indexOf(monthA) - MONTH_ORDER.indexOf(monthB);
   });
 
   return (

@@ -3,19 +3,23 @@ import { SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/client";
 
 const SPEECHES_QUERY = `*[
-  _type == "year"
-  && category->title == "speeches"
-]{_id, title, image{asset->{url}}}`;
+  _type == "year" && category->title == "speeches"
+] {
+  _id, title, image{asset->{url}}
+}`;
 
 export default async function IndexPage() {
+  let speeches: SanityDocument[] = [];
+
   try {
-    const speeches = await sanityFetch<SanityDocument[]>({ query: SPEECHES_QUERY });
-    console.log('Speeches is here', speeches, speeches[0].image);
+    speeches = await sanityFetch<SanityDocument[]>({ query: SPEECHES_QUERY });
+    console.log('Speeches are here', speeches, speeches[0]?.image);
   } catch (error) {
     console.log('This is an error', error);
   }
 
-  const speeches = await sanityFetch<SanityDocument[]>({ query: SPEECHES_QUERY });
+  // Convert the title to a number and sort the speeches array in descending order
+  speeches.sort((a, b) => Number(b.title) - Number(a.title));
 
   return (
     <main className="flex bg-gray-100 min-h-screen flex-col py-32 px-6 md:p-24 md:mt-20 gap-12">

@@ -8,15 +8,22 @@ const MEDIA_MONTH_QUERY = `*[
   && year->title == $year
 ]{_id, title, image{asset->{url}}}`;
 
+const MONTH_ORDER = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 export default async function IndexPage({
   params,
 }: {
   params: { slug: string };
-})  {
+}) {
   const { slug } = params;
 
+  let media_months: SanityDocument[] = [];
+
   try {
-    const media_months = await sanityFetch<SanityDocument[]>({
+    media_months = await sanityFetch<SanityDocument[]>({
       query: MEDIA_MONTH_QUERY,
       params: { year: slug },
     });
@@ -25,9 +32,11 @@ export default async function IndexPage({
     console.log('This is an error', error);
   }
 
-  const media_months = await sanityFetch<SanityDocument[]>({
-    query: MEDIA_MONTH_QUERY,
-    params: { year: slug },
+  // Sort media_months by month order
+  media_months.sort((a, b) => {
+    const monthA = a.title;
+    const monthB = b.title;
+    return MONTH_ORDER.indexOf(monthA) - MONTH_ORDER.indexOf(monthB);
   });
 
   return (

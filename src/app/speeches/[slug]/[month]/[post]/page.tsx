@@ -1,10 +1,52 @@
-import { PortableText, type SanityDocument } from "next-sanity";
+import { type SanityDocument } from "next-sanity";
+import { PortableText, PortableTextReactComponents } from "@portabletext/react";
 import imageUrlBuilder from "@sanity/image-url";
 
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { client, sanityFetch } from "@/sanity/client";
 import Link from "next/link";
 import Image from "next/image";
+import {getImageDimensions} from '@sanity/asset-utils'
+import urlBuilder from "@sanity/image-url";
+
+const SampleImageComponent = ({value, isInline}: {value: any, isInline: boolean}) => {
+  const {width, height} = getImageDimensions(value)
+  return (
+    <img
+      src={urlBuilder()
+        .image(value)
+        .width(isInline ? 100 : 800)
+        .fit('max')
+        .auto('format')
+        .url()}
+      alt={value.alt || ' '}
+      loading="lazy"
+      style={{
+        // Display alongside text if image appears inside a block text span
+        display: isInline ? 'inline-block' : 'block',
+
+        // Avoid jumping around with aspect-ratio CSS property
+        aspectRatio: width / height,
+      }}
+    />
+  )
+}
+
+const components: Partial<PortableTextReactComponents> = {
+  types: {
+    image: ({value}) => <img src={value.imageUrl} />,
+  },
+  list: {
+    bullet: ({ children }) => <ul className="ml-4 list-disc">{children}</ul>,
+    number: ({ children }) => <ol className="ml-4 list-decimal">{children}</ol>,
+  },
+  block: {
+    h1: ({ children }) => <h1 className="text-2xl font-bold">{children}</h1>,
+    h2: ({ children }) => <h2 className="text-xl font-bold">{children}</h2>,
+    h3: ({ children }) => <h3 className="text-lg font-bold">{children}</h3>,
+    normal: ({ children }) => <p className="my-4">{children}</p>,
+  },
+};
 
 const POST_QUERY = `*[
     _type == "post" &&
@@ -30,7 +72,7 @@ export default async function EventPage({
         query: POST_QUERY,
         params,
       });
-    console.log("posts is here", post);
+    console.log("posts is here", post.body);
   } catch (error) {
     console.log("This is an error", error);
   }
@@ -68,7 +110,7 @@ export default async function EventPage({
         <div className="flex flex-col justify-center space-y-4">
           <div className="space-y-4">
             {title ? (
-              <h1 className="text-4xl font-bold tracking-tighter mb-8">
+              <h1 className="text-2xl font-bold tracking-tighter mb-8">
                 {title}
               </h1>
             ) : null}

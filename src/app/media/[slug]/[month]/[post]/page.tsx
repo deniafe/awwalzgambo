@@ -87,7 +87,7 @@ export default async function EventPage({
         <div className="flex flex-col justify-center space-y-4">
           <div className="space-y-4">
             {title ? (
-              <h1 className="text-4xl font-bold tracking-tighter mb-8">
+              <h1 className="text-2xl font-bold tracking-tighter mb-8">
                 {title}
               </h1>
             ) : null}

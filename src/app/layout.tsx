@@ -3,6 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+// _app.js or _app.tsx
+import 'react-vertical-timeline-component/style.min.css';
+
 
 const inter = Inter({ subsets: ["latin"] });
 

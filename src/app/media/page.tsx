@@ -8,14 +8,17 @@ const MEDIA_QUERY = `*[
 ]{_id, title, image{asset->{url}}}`;
 
 export default async function IndexPage() {
+  let mediaItems: SanityDocument[] = [];
+
   try {
-    const mediaItems = await sanityFetch<SanityDocument[]>({ query: MEDIA_QUERY });
+    mediaItems = await sanityFetch<SanityDocument[]>({ query: MEDIA_QUERY });
     console.log('Media items are here', mediaItems, mediaItems[0]?.image);
   } catch (error) {
     console.log('This is an error', error);
   }
 
-  const mediaItems = await sanityFetch<SanityDocument[]>({ query: MEDIA_QUERY });
+  // Convert the title to a number and sort the mediaItems array in descending order
+  mediaItems.sort((a, b) => Number(b.title) - Number(a.title));
 
   return (
     <main className="flex bg-gray-100 min-h-screen flex-col py-32 px-6 md:p-24 md:mt-20 gap-12">
