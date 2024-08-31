@@ -48,12 +48,12 @@ export default async function EventPage({
 
   const {
     title,
-    publishedAt,
+    createdAt,
     mainImage,
     video, // Assuming this field contains the full YouTube URL
   } = post;
 
-  const eventDate = new Date(publishedAt).toDateString();
+  const eventDate = new Date(createdAt).toDateString();
   const youtubeVideoId = video ? getYouTubeVideoId(video) : null;
 
   return (
@@ -96,7 +96,7 @@ export default async function EventPage({
               <dt>{post.author || 'Admin'}</dt>
             </dl>
             <dl className="grid grid-cols-2 gap-1 text-sm font-medium sm:gap-2 lg:text-base">
-              <dd className="font-semibold">Published At</dd>
+              <dd className="font-semibold">Date</dd>
               <div>
                 {eventDate && <dt>{eventDate}</dt>}
               </div>

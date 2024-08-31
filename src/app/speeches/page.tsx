@@ -12,13 +12,14 @@ export default async function IndexPage() {
   let speeches: SanityDocument[] = [];
 
   try {
+    // Fetching speeches from Sanity
     speeches = await sanityFetch<SanityDocument[]>({ query: SPEECHES_QUERY });
-    console.log('Speeches are here', speeches, speeches[0]?.image);
+    console.log("Speeches are here", speeches, speeches[0]?.image);
   } catch (error) {
-    console.log('This is an error', error);
+    console.log("This is an error", error);
   }
 
-  // Convert the title to a number and sort the speeches array in descending order
+  // Sorting speeches to ensure the latest speech appears first
   speeches.sort((a, b) => Number(b.title) - Number(a.title));
 
   return (

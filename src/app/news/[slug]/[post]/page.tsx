@@ -6,35 +6,41 @@ import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { client, sanityFetch } from "@/sanity/client";
 import Link from "next/link";
 import Image from "next/image";
-import {getImageDimensions} from '@sanity/asset-utils'
+import { getImageDimensions } from "@sanity/asset-utils";
 import urlBuilder from "@sanity/image-url";
 
-const SampleImageComponent = ({value, isInline}: {value: any, isInline: boolean}) => {
-  const {width, height} = getImageDimensions(value)
+const SampleImageComponent = ({
+  value,
+  isInline,
+}: {
+  value: any;
+  isInline: boolean;
+}) => {
+  const { width, height } = getImageDimensions(value);
   return (
     <img
       src={urlBuilder()
         .image(value)
         .width(isInline ? 100 : 800)
-        .fit('max')
-        .auto('format')
+        .fit("max")
+        .auto("format")
         .url()}
-      alt={value.alt || ' '}
+      alt={value.alt || " "}
       loading="lazy"
       style={{
         // Display alongside text if image appears inside a block text span
-        display: isInline ? 'inline-block' : 'block',
+        display: isInline ? "inline-block" : "block",
 
         // Avoid jumping around with aspect-ratio CSS property
         aspectRatio: width / height,
       }}
     />
-  )
-}
+  );
+};
 
 const components: Partial<PortableTextReactComponents> = {
   types: {
-    image: ({value}) => <img src={value.imageUrl} />,
+    image: ({ value }) => <img src={value.imageUrl} />,
   },
   list: {
     bullet: ({ children }) => <ul className="ml-4 list-disc">{children}</ul>,
@@ -64,40 +70,34 @@ export default async function EventPage({
 }: {
   params: { post: string };
 }) {
-
-    const postId = params.post
+  const postId = params.post;
 
   try {
     const post = await sanityFetch<SanityDocument>({
-        query: POST_QUERY,
-        params,
-      });
-    console.log("posts is here", post.body);
+      query: POST_QUERY,
+      params,
+    });
+    console.log("posts are here", post.body);
   } catch (error) {
     console.log("This is an error", error);
   }
 
   const post = await sanityFetch<SanityDocument>({
     query: POST_QUERY,
-    params: {postId: postId},
+    params: { postId: postId },
   });
 
-  const {
-    title,
-    publishedAt,
-    mainImage,
-  } = post;
+  const { title, createdAt, mainImage } = post;
 
   const eventImageUrl = mainImage
     ? urlFor(mainImage)?.width(550).height(310).url()
     : null;
-  const eventDate = new Date(publishedAt).toDateString();
-//   const eventTime = new Date(publishedAt).toLocaleTimeString();
+  const eventDate = new Date(createdAt).toDateString();
 
   return (
     <main className="container mx-auto grid gap-12 p-12 mt-12 md:mt-20">
       <div className="mb-4">
-        <Link href="/speeches">← Back to speeches</Link>
+        <Link href="/news">← Back to news</Link>
       </div>
       <div className="grid items-top gap-12 sm:grid-cols-2">
         <Image
@@ -114,29 +114,22 @@ export default async function EventPage({
                 {title}
               </h1>
             ) : null}
-              <dl className="grid grid-cols-2 gap-1 text-sm font-medium sm:gap-2 lg:text-base">
-                <dd className="font-semibold">Author</dd>
-                <dt>{post.author || 'Admin'}</dt>
-              </dl>
             <dl className="grid grid-cols-2 gap-1 text-sm font-medium sm:gap-2 lg:text-base">
-              <dd className="font-semibold">Published At</dd>
-              <div>
-                {eventDate && <dt>{eventDate}</dt>}
-                {/* {eventTime && <dt>{eventTime}</dt>} */}
-              </div>
+              <dd className="font-semibold">Author</dd>
+              <dt>{post.author || "Admin"}</dt>
             </dl>
-              <dl className="grid gap-1 text-sm font-medium sm:gap-2 lg:text-base">
-                {/* <dd className="font-semibold">Headline</dd>
-                <div className="grid gap-1">
-                </div> */}
-                <div>{post.headline}</div>
-              </dl>
-           
+            <dl className="grid grid-cols-2 gap-1 text-sm font-medium sm:gap-2 lg:text-base">
+              <dd className="font-semibold">Date</dd>
+              <div>{eventDate && <dt>{eventDate}</dt>}</div>
+            </dl>
+            <dl className="grid gap-1 text-sm font-medium sm:gap-2 lg:text-base">
+              <div>{post.headline}</div>
+            </dl>
           </div>
         </div>
       </div>
       <div className="lg:max-w-screen-lg leading-relaxed space-y-6 mt-4">
-        <PortableText value={post.body} />
+        <PortableText value={post.body} components={components} />
       </div>
     </main>
   );

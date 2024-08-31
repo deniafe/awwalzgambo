@@ -10,7 +10,7 @@ export const Footer = () => {
       icon: <Facebook />,
     },
     {
-      href: '#!',
+      href: 'https://www.instagram.com/awwalzgambo',
       icon: <Instagram />,
     },
     {

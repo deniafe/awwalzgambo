@@ -1,8 +1,7 @@
-'use client'
+'use client';
 
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
-
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -12,22 +11,41 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
+import imageUrlBuilder from "@sanity/image-url";// Use the refactored client import
+import { client } from "@/sanity/client";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
-export function NewsSection() {
+// Define the type for the posts prop
+interface Post {
+  _id: string;
+  title: string;
+  headline: string;
+  mainImage?: { asset: { url: string } }; // Make mainImage optional
+}
+
+interface NewsSectionProps {
+  posts: Post[];
+}
+
+export function NewsSection({ posts }: NewsSectionProps) {
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true })
   );
 
-  const newsItems = [
-    { id: 1, imageUrl: "/img/1.jpeg", title: `He enlisted into the Nigerian Defence Academy as a member of 36 Regular Course on 24 September 1984 and was commissioned Sub-Lieutenant on 24 October 1989.` },
-    { id: 2, imageUrl: "/img/2.jpeg", title: `He enlisted into the Nigerian Defence Academy as a member of 36 Regular Course on 24 September 1984 and was commissioned Sub-Lieutenant on 24 October 1989.` },
-    { id: 3, imageUrl: "/img/3.jpeg", title: `He enlisted into the Nigerian Defence Academy as a member of 36 Regular Course on 24 September 1984 and was commissioned Sub-Lieutenant on 24 October 1989.` },
-    { id: 4, imageUrl: "/img/4.jpeg", title: `He enlisted into the Nigerian Defence Academy as a member of 36 Regular Course on 24 September 1984 and was commissioned Sub-Lieutenant on 24 October 1989.` },
-  ];
+  const { projectId, dataset } = client.config();
+  const urlFor = (source: SanityImageSource) => {
+    if (projectId && dataset) {
+      const builder = imageUrlBuilder({ projectId, dataset });
+      return builder.image(source).url();
+    }
+    return ""; // Return an empty string if projectId or dataset is missing
+  };
 
   return (
     <div className="relative z-2 bg-gray-100 w-full mb-[4rem] flex flex-col items-center md:min-h-screen">
-       <h2 className="text-3xl md:text-5xl text-gray-300 font-bold mb-12 mt-24">LATEST NEWS</h2>
+      <h2 className="text-3xl md:text-5xl text-gray-400 font-bold mb-12 mt-24">
+        LATEST NEWS
+      </h2>
       <Carousel
         plugins={[plugin.current]}
         className="relative overflow-hidden w-full md:max-w-4xl h-[32rem]"
@@ -35,17 +53,18 @@ export function NewsSection() {
         onMouseLeave={plugin.current.reset}
       >
         <CarouselContent className="flex">
-          {newsItems.map((item) => (
-            <CarouselItem key={item.id} className="relative">
+          {posts.map((post) => (
+            <CarouselItem key={post._id} className="relative">
               <Card className="relative transition-transform transform hover:scale-105 min-h-96">
                 <CardContent className="relative grid grid-cols-1 md:grid-cols-2 md:space-x-4 p-0">
-                  <div className="flex items-center col-span-1 justify-center text-center px-2 py-8 md:px-4">
-                    {item.title}
+                  <div className="flex flex-col text-center justify-center items-center px-4 md:px-8">
+                    <h3 className="text-lg text-gray-800 font-semibold">{post.title}</h3>
+                    <p className="text-sm text-gray-500 mt-6">{post.headline}</p>
                   </div>
                   <div className="col-span-1 w-full flex justify-center h-full bg-slate-400">
-                    <Image 
-                      src={item.imageUrl}
-                      alt={item.title}
+                    <Image
+                      src={post.mainImage ? urlFor(post.mainImage) : "/img/placeholder.png"}
+                      alt={post.title}
                       width={500}
                       height={500}
                       objectFit="cover"
@@ -65,7 +84,12 @@ export function NewsSection() {
             stroke="currentColor"
             className="h-6 w-6"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
         </CarouselPrevious>
         <CarouselNext className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-25 text-white p-2">
@@ -76,7 +100,12 @@ export function NewsSection() {
             stroke="currentColor"
             className="h-6 w-6"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
           </svg>
         </CarouselNext>
       </Carousel>

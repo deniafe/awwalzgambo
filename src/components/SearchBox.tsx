@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { SanityDocument } from "next-sanity";
 import { handleSearch } from '@/app/actions/search';
 import Link from 'next/link';
+import { capitalizeFirstLetter } from '@/lib/utils';
 
 export default function SearchBox() {
   const [loading, setLoading] = useState(false);
@@ -15,7 +16,11 @@ export default function SearchBox() {
     setSearchItems([]);
     setLoading(true);
     const result = await handleSearch(searchTerm);
-    setSearchItems(result);
+    
+    // Sort the result by createdAt in descending order
+    const sortedResult = result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    
+    setSearchItems(sortedResult);
     setLoading(false);
   };
 
@@ -52,7 +57,7 @@ export default function SearchBox() {
         {searchItems.length > 0 && (
           <ul className="space-y-4">
             {searchItems.map((post) => {
-              const formattedDate = new Date(post.publishedAt).toLocaleDateString(
+              const formattedDate = new Date(post.createdAt).toLocaleDateString(
                 "en-US",
                 { year: "numeric", month: "long", day: "numeric" }
               );
@@ -62,9 +67,9 @@ export default function SearchBox() {
                   className="bg-white p-4 rounded-lg shadow hover:shadow-lg hover:opacity-90 transition-opacity duration-300"
                   key={post._id}
                 >
-                  <Link href={`/${post.category.title}/${post.year.title}/${post.month.title}/${post?._id}`}>
+                  <Link href={`/${post.category.title}/${post.year.title}/${post?._id}`}>
                     <h2 className="text-xl font-semibold my-4">{post?.title}</h2>
-                    <p className="text-gray-600 font-semibold text-xs">{formattedDate}</p>
+                    <p className="text-gray-600 font-semibold text-xs">{capitalizeFirstLetter(post.category.title)} - {formattedDate}</p>
                   </Link>
                 </div>
               );

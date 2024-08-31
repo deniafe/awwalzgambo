@@ -2,16 +2,11 @@ import Link from "next/link";
 import { SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/client";
 
-const MEDIA_MONTH_QUERY = `*[
-  _type == "month"
+const MEDIA_POST_QUERY = `*[
+  _type == "post"
   && category->title == "media"
   && year->title == $year
-]{_id, title, image{asset->{url}}}`;
-
-const MONTH_ORDER = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
+]{_id, title, createdAt}`;
 
 export default async function IndexPage({
   params,
@@ -19,48 +14,50 @@ export default async function IndexPage({
   params: { slug: string };
 }) {
   const { slug } = params;
+  console.log("The slugs", slug);
 
-  let media_months: SanityDocument[] = [];
+  let media_posts: SanityDocument[] = [];
 
   try {
-    media_months = await sanityFetch<SanityDocument[]>({
-      query: MEDIA_MONTH_QUERY,
+    // Fetch media posts from Sanity
+    media_posts = await sanityFetch<SanityDocument[]>({
+      query: MEDIA_POST_QUERY,
       params: { year: slug },
     });
-    console.log('Media items are here', media_months, media_months[0]?.image);
+    console.log("Media posts are here", media_posts);
   } catch (error) {
-    console.log('This is an error', error);
+    console.log("This is an error", error);
   }
 
-  // Sort media_months by month order
-  media_months.sort((a, b) => {
-    const monthA = a.title;
-    const monthB = b.title;
-    return MONTH_ORDER.indexOf(monthA) - MONTH_ORDER.indexOf(monthB);
-  });
+  // Sort media posts by createdAt in descending order (latest first)
+  media_posts.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
 
   return (
     <main className="flex bg-gray-100 min-h-screen flex-col py-32 px-6 md:p-24 md:mt-20 gap-12">
       <h1 className="text-4xl font-bold tracking-tighter">Media Archive {slug}</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:grid-cols-3">
-        {media_months.map((month) => (
-          <div
-            className="bg-white p-4 rounded-lg shadow hover:shadow-lg hover:opacity-90 transition-opacity duration-300"
-            key={month._id}
-          >
-            <Link href={`/media/${slug}/${month?.title}`}>
-              {month?.image?.asset?.url && (
-                <img
-                  src={month.image.asset.url}
-                  alt={month.title}
-                  className="w-full h-48 object-cover rounded-lg"
-                />
-              )}
-              <h2 className="text-xl font-semibold mt-4">{month?.title}</h2>
-              <p className="text-gray-500">{`Media in ${month?.title}`}</p>
-            </Link>
-          </div>
-        ))}
+      <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+        {media_posts.map((post) => {
+          const formattedDate = new Date(post.createdAt).toLocaleDateString(
+            "en-US",
+            { year: "numeric", month: "long", day: "numeric" }
+          );
+
+          return (
+            <div
+              className="bg-white p-4 rounded-lg shadow hover:shadow-lg hover:opacity-90 transition-opacity duration-300"
+              key={post._id}
+            >
+              <Link href={`/media/${slug}/${post?._id}`}>
+                <h2 className="text-xl font-semibold my-4">{post?.title}</h2>
+                <p className="text-gray-600 font-semibold text-xs">
+                  {formattedDate}
+                </p>
+              </Link>
+            </div>
+          );
+        })}
       </div>
     </main>
   );

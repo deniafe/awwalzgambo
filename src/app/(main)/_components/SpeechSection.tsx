@@ -12,7 +12,7 @@ export const Speech = () => {
               "[mask-image:radial-gradient(200px_circle_at_center,white,transparent)]",
               )}
           />
-            <h2 className="text-3xl md:text-5xl text-center text-gray-300 font-bold mb-12">SPEECH</h2>
+            <h2 className="text-3xl md:text-5xl text-center text-gray-400 font-bold mb-12">SPEECHES</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 md:space-x-8 space-y-8">
             <div className="p-4 border-t border-r border-solid border-black ">
                 <Image src='/img/speech.jpeg' height={500} width={500} alt={'awwalzgambo'} className="cols-span-1 w-full h-full" />

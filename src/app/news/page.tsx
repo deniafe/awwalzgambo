@@ -8,7 +8,7 @@ const NEWS_QUERY = `*[
   _id, title, image{asset->{url}}
 }`;
 
-export default async function IndexPage() {
+export default async function IndexPage() { 
   let news: SanityDocument[] = [];
 
   try {
