@@ -1,10 +1,12 @@
-import { PortableText, type SanityDocument } from "next-sanity";
+import { type SanityDocument } from "next-sanity";
+import { PortableText, PortableTextReactComponents } from "@portabletext/react";
 import imageUrlBuilder from "@sanity/image-url";
 
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { client, sanityFetch } from "@/sanity/client";
 import Link from "next/link";
 import Image from "next/image";
+
 
 const POST_QUERY = `*[
     _type == "post" &&
@@ -22,6 +24,37 @@ const getYouTubeVideoId = (url: string) => {
   const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
   const match = url.match(regex);
   return match ? match[1] : null;
+};
+
+const components: Partial<PortableTextReactComponents> = {
+  types: {
+    image: ({ value }) => (
+      <img
+        src={urlFor(value.asset)?.url() || ''}
+        alt={value.alt || 'Image'}
+        className="rounded-xl mr-4"
+        style={{ maxWidth: '100%', height: 'auto' }}
+      />
+    ),
+    externalImage: ({ value }) => (
+      <img
+        src={value.url}
+        alt={value.alt || 'External image'}
+        className="rounded-xl mr-4"
+        style={{ maxWidth: '100%', height: 'auto' }}
+      />
+    ),
+  },
+  list: {
+    bullet: ({ children }) => <ul className="ml-4 list-disc">{children}</ul>,
+    number: ({ children }) => <ol className="ml-4 list-decimal">{children}</ol>,
+  },
+  block: {
+    h1: ({ children }) => <h1 className="text-2xl font-bold">{children}</h1>,
+    h2: ({ children }) => <h2 className="text-xl font-bold">{children}</h2>,
+    h3: ({ children }) => <h3 className="text-lg font-bold">{children}</h3>,
+    normal: ({ children }) => <p className="my-4">{children}</p>,
+  },
 };
 
 export default async function EventPage({
@@ -108,7 +141,7 @@ export default async function EventPage({
         </div>
       </div>
       <div className="lg:max-w-screen-lg leading-relaxed space-y-6 mt-4">
-        <PortableText value={post.body} />
+        <PortableText value={post.body} components={components} />
       </div>
     </main>
   );

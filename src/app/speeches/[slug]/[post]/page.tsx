@@ -99,7 +99,22 @@ const SampleImageComponent = ({value, isInline}: {value: any, isInline: boolean}
 
 const components: Partial<PortableTextReactComponents> = {
   types: {
-    image: ({value}) => <img src={value.imageUrl} />,
+    image: ({ value }) => (
+      <img
+        src={urlFor(value.asset)?.url() || ''}
+        alt={value.alt || 'Image'}
+        className="rounded-xl mr-4"
+        style={{ maxWidth: '100%', height: 'auto' }}
+      />
+    ),
+    externalImage: ({ value }) => (
+      <img
+        src={value.url}
+        alt={value.alt || 'External image'}
+        className="rounded-xl mr-4"
+        style={{ maxWidth: '100%', height: 'auto' }}
+      />
+    ),
   },
   list: {
     bullet: ({ children }) => <ul className="ml-4 list-disc">{children}</ul>,
@@ -201,7 +216,7 @@ export default async function EventPage({
         </div>
       </div>
       <div className="lg:max-w-screen-lg leading-relaxed space-y-6 mt-4">
-        <PortableText value={post.body} />
+        <PortableText value={post.body} components={components} />
       </div>
     </main>
   );

@@ -40,7 +40,22 @@ const SampleImageComponent = ({
 
 const components: Partial<PortableTextReactComponents> = {
   types: {
-    image: ({ value }) => <img src={value.imageUrl} />,
+    image: ({ value }) => (
+      <img
+        src={urlFor(value.asset)?.url() || ''}
+        alt={value.alt || 'Image'}
+        className="rounded-xl mr-4"
+        style={{ maxWidth: '100%', height: 'auto' }}
+      />
+    ),
+    externalImage: ({ value }) => (
+      <img
+        src={value.url}
+        alt={value.alt || 'External image'}
+        className="rounded-xl mr-4"
+        style={{ maxWidth: '100%', height: 'auto' }}
+      />
+    ),
   },
   list: {
     bullet: ({ children }) => <ul className="ml-4 list-disc">{children}</ul>,
@@ -53,6 +68,7 @@ const components: Partial<PortableTextReactComponents> = {
     normal: ({ children }) => <p className="my-4">{children}</p>,
   },
 };
+
 
 const POST_QUERY = `*[
     _type == "post" &&

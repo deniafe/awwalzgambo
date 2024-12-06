@@ -159,3 +159,8 @@
   ::-webkit-scrollbar-corner {
     background: transparent; /* Color of the scrollbar corners */
   }
+
+  p > a {
+    color: #888f9b;
+    text-decoration: underline;
+  }
